@@ -27,13 +27,7 @@
                 }
             }
         },
-        deactivated: function () {
-            this.task = {
-                id: '',
-                title: '',
-                description: ''
-            }
-        },
+        //TODO: clean on deactive
         methods: {
             save: function (task) {
                 task.id = uuid();

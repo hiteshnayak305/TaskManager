@@ -3,7 +3,7 @@
       <div v-bind:key="task.id" v-for="task in tasks">
           <task v-bind:task="task" v-on:remove="remove" v-on:edit="edit"></task>
       </div>
-      <edit v-bind:task="task"></edit>
+      <edit v-bind:task="task" v-on:save="ed_save" v-on:discard="ed_discard"></edit>
       <add v-on:save="save"></add>
       <float-button v-on:add="add"></float-button>
   </div>
@@ -44,12 +44,17 @@ export default {
           this.tasks.push(task);
       },
       edit: function(id) {
-          this.task = this.tasks.filter(task => task.id == id);
-          this.task = this.task[0];
+          this.task = this.tasks.find(task => task.id == id);
           Edit.methods.show();
       },
       remove: function(id) {
           this.tasks = this.tasks.filter(task => task.id != id);
+      },
+      ed_save: function() {
+          localStorage.tasks = JSON.stringify(this.tasks);
+      },
+      ed_discard: function() {
+          this.tasks = JSON.parse(localStorage.tasks);
       }
   },
   watch: {
